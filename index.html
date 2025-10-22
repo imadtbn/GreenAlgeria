@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>حملة التشجير الوطنية - الجزائر</title>
+    <title>الجزائر الخضراء - خضراء بإذن الله</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -13,74 +14,111 @@
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        
+
         body {
             background-color: #f5f5f5;
             color: #333;
             line-height: 1.6;
         }
-        
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 15px;
         }
-        
+
+        /* تحسين الهيدر للهواتف */
         header {
             background: linear-gradient(to right, #2e7d32, #4caf50);
             color: white;
-            padding: 1.5rem 0;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
-        
+
         .header-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
         }
-        
+
         .logo {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 10px;
+            flex: 1;
+            min-width: 250px;
         }
-        
+
         .logo-icon {
-            font-size: 2.5rem;
+            font-size: 2rem;
         }
-        
+
         .logo-text h1 {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             margin-bottom: 5px;
         }
-        
+
         .logo-text p {
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             opacity: 0.9;
         }
-        
+
+        /* تحسين القائمة للهواتف */
+        nav {
+            width: 100%;
+            margin-top: 10px;
+            display: none;
+        }
+
+        nav.active {
+            display: block;
+        }
+
         nav ul {
             display: flex;
             list-style: none;
-            gap: 20px;
+            flex-direction: column;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 10px;
         }
-        
+
+        nav li {
+            margin: 5px 0;
+        }
+
         nav a {
             color: white;
             text-decoration: none;
             font-weight: 500;
-            padding: 5px 10px;
+            padding: 8px 15px;
             border-radius: 4px;
             transition: background 0.3s;
+            display: block;
         }
-        
+
         nav a:hover {
-            background: rgba(255,255,255,0.2);
+            background: rgba(255, 255, 255, 0.2);
         }
-        
+
+        /* زر القائمة المنسدلة للهواتف */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 5px;
+        }
+
         .hero {
             background: url('https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
-            height: 400px;
+            height: 300px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -88,7 +126,7 @@
             color: white;
             position: relative;
         }
-        
+
         .hero::before {
             content: '';
             position: absolute;
@@ -96,298 +134,391 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0, 0, 0, 0.5);
         }
-        
+
         .hero-content {
             position: relative;
             z-index: 1;
             max-width: 800px;
-            padding: 0 20px;
+            padding: 0 15px;
         }
-        
+
         .hero h2 {
-            font-size: 2.5rem;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            font-size: 1rem;
             margin-bottom: 20px;
         }
-        
-        .hero p {
-            font-size: 1.2rem;
-            margin-bottom: 30px;
-        }
-        
+
         .btn {
             display: inline-block;
             background: #4caf50;
             color: white;
-            padding: 12px 25px;
+            padding: 10px 20px;
             border: none;
             border-radius: 4px;
-            font-size: 1rem;
+            font-size: 0.9rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
             text-decoration: none;
         }
-        
+
         .btn:hover {
             background: #2e7d32;
             transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
-        
+
         .btn-outline {
             background: transparent;
             border: 2px solid #4caf50;
             color: #4caf50;
         }
-        
+
         .btn-outline:hover {
             background: #4caf50;
             color: white;
         }
-        
+
         .map-section {
-            padding: 50px 0;
+            padding: 40px 0;
             background: white;
         }
-        
+
         .section-title {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
             color: #2e7d32;
-            font-size: 2rem;
+            font-size: 1.8rem;
         }
-        
+
+        /* تحسين حجم الخريطة للهواتف */
         .map-container {
-            height: 500px;
+            height: 400px;
             border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 25px;
         }
-        
+
         #map {
             height: 100%;
             width: 100%;
         }
-        
+
         .controls {
             display: flex;
             justify-content: center;
-            gap: 15px;
+            gap: 10px;
             flex-wrap: wrap;
             margin-top: 20px;
         }
-        
+
         .info-section {
-            padding: 50px 0;
+            padding: 40px 0;
             background: #f9f9f9;
         }
-        
+
         .info-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
         }
-        
+
         .info-card {
             background: white;
-            padding: 25px;
+            padding: 20px;
             border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
             text-align: center;
             transition: transform 0.3s, box-shadow 0.3s;
         }
-        
+
         .info-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
         }
-        
+
         .info-card i {
-            font-size: 3rem;
+            font-size: 2.5rem;
             color: #4caf50;
             margin-bottom: 15px;
         }
-        
+
         .info-card h3 {
             margin-bottom: 15px;
             color: #2e7d32;
+            font-size: 1.3rem;
         }
-        
+
         .data-section {
-            padding: 50px 0;
+            padding: 40px 0;
             background: white;
         }
-        
+
         .search-container {
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             display: flex;
-            gap: 15px;
+            gap: 10px;
             flex-wrap: wrap;
             justify-content: center;
         }
-        
+
         .search-box {
             flex: 1;
-            min-width: 300px;
-            padding: 12px 15px;
+            min-width: 100%;
+            padding: 10px 12px;
             border: 1px solid #ddd;
             border-radius: 4px;
-            font-size: 1rem;
+            font-size: 0.9rem;
         }
-        
+
+        /* تحسين الجدول للهواتف */
         .table-container {
             overflow-x: auto;
             border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
         }
-        
+
         table {
             width: 100%;
             border-collapse: collapse;
+            min-width: 600px;
         }
-        
-        th, td {
-            padding: 15px;
+
+        th,
+        td {
+            padding: 12px 10px;
             text-align: right;
             border-bottom: 1px solid #eee;
+            font-size: 0.9rem;
         }
-        
+
         th {
             background-color: #4caf50;
             color: white;
             font-weight: 600;
+            white-space: nowrap;
         }
-        
+
         tr:hover {
             background-color: #f5f5f5;
         }
-        
+
         .action-btn {
             background: #4caf50;
             color: white;
             border: none;
-            padding: 8px 15px;
+            padding: 6px 12px;
             border-radius: 4px;
             cursor: pointer;
             transition: background 0.3s;
+            font-size: 0.85rem;
+            white-space: nowrap;
         }
-        
+
         .action-btn:hover {
             background: #2e7d32;
         }
-        
+
+        /* تحسين الفوتر للهواتف */
         footer {
             background: #333;
             color: white;
-            padding: 40px 0 20px;
+            padding: 30px 0 15px;
         }
-        
+
         .footer-content {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin-bottom: 30px;
+            grid-template-columns: 1fr;
+            gap: 25px;
+            margin-bottom: 25px;
         }
-        
+
         .footer-column h3 {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             color: #4caf50;
+            font-size: 1.3rem;
         }
-        
+
         .footer-column ul {
             list-style: none;
         }
-        
+
         .footer-column ul li {
-            margin-bottom: 10px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
-        
+
         .footer-column a {
             color: #ddd;
             text-decoration: none;
             transition: color 0.3s;
         }
-        
+
         .footer-column a:hover {
             color: #4caf50;
         }
-        
+
         .copyright {
             text-align: center;
-            padding-top: 20px;
+            padding-top: 15px;
             border-top: 1px solid #444;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: #aaa;
-        }
-        
-        @media (max-width: 768px) {
-            .header-content {
-                flex-direction: column;
-                gap: 15px;
-                text-align: center;
-            }
-            
-            nav ul {
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-            
-            .hero h2 {
-                font-size: 2rem;
-            }
-            
-            .hero p {
-                font-size: 1rem;
-            }
-            
-            th, td {
-                padding: 10px;
-                font-size: 0.9rem;
-            }
         }
 
         /* تأثيرات بصرية إضافية */
         .pulse {
             animation: pulse 2s infinite;
         }
-        
+
         @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+
+            100% {
+                transform: scale(1);
+            }
         }
-        
+
         .fade-in {
             opacity: 0;
             animation: fadeIn 1s forwards;
         }
-        
+
         @keyframes fadeIn {
-            to { opacity: 1; }
+            to {
+                opacity: 1;
+            }
         }
-        
+
         .stagger-item {
             opacity: 0;
             transform: translateY(20px);
             animation: stagger 0.5s forwards;
         }
-        
+
         @keyframes stagger {
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
-        
+
         .highlight {
             background-color: #e8f5e9 !important;
             transition: background-color 0.5s;
         }
+
+        /* تحسينات للشاشات المتوسطة والكبيرة */
+        @media (min-width: 768px) {
+            .container {
+                padding: 0 20px;
+            }
+
+            header {
+                padding: 1.5rem 0;
+            }
+
+            .logo {
+                flex: 0 1 auto;
+                min-width: auto;
+            }
+
+            .logo-icon {
+                font-size: 2.5rem;
+            }
+
+            .logo-text h1 {
+                font-size: 1.8rem;
+            }
+
+            .logo-text p {
+                font-size: 0.9rem;
+            }
+
+            nav {
+                width: auto;
+                margin-top: 0;
+                display: block !important;
+            }
+
+            nav ul {
+                flex-direction: row;
+                background: transparent;
+                padding: 0;
+            }
+
+            nav li {
+                margin: 0 5px;
+            }
+
+            .menu-toggle {
+                display: none;
+            }
+
+            .hero {
+                height: 400px;
+            }
+
+            .hero h2 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.2rem;
+            }
+
+            .btn {
+                padding: 12px 25px;
+                font-size: 1rem;
+            }
+
+            .map-container {
+                height: 500px;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .search-box {
+                min-width: 300px;
+            }
+
+            th,
+            td {
+                padding: 15px;
+                font-size: 1rem;
+            }
+
+            .footer-content {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            }
+        }
+
+        @media (min-width: 992px) {
+            .footer-content {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
     </style>
 </head>
+
 <body>
     <header>
         <div class="container">
@@ -397,11 +528,20 @@
                         <i class="fas fa-tree"></i>
                     </div>
                     <div class="logo-text">
-                        <h1>حملة التشجير الوطنية</h1>
-                        <p>الجزائر أكثر خضرة واخضرارًا</p>
+                        <h1>
+                            حملة الجزائر خضراء لغرس مليون شجرة
+                        </h1>
+                        <p>
+                            خضراء بإذن الله
+                        </p>
                     </div>
                 </div>
-                <nav>
+
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+
+                <nav id="mainNav">
                     <ul>
                         <li><a href="#home">الرئيسية</a></li>
                         <li><a href="#map-section">الخريطة</a></li>
@@ -430,7 +570,7 @@
             </div>
             <div class="controls">
                 <button id="findNearest" class="btn">
-                    <i class="fas fa-location-arrow"></i> ابحث عن أقرب موقع تشجير
+                    <i class="fas fa-location-arrow"></i> ابحث عن أقرب موقع
                 </button>
                 <button id="showAll" class="btn btn-outline">
                     <i class="fas fa-map-marker-alt"></i> عرض جميع المواقع
@@ -442,12 +582,12 @@
     <section class="data-section" id="data-section">
         <div class="container">
             <h2 class="section-title">قائمة مناطق التشجير</h2>
-            
+
             <div class="search-container">
                 <input type="text" id="searchInput" class="search-box" placeholder="ابحث حسب الولاية أو البلدية...">
                 <button id="resetSearch" class="btn btn-outline">إعادة تعيين</button>
             </div>
-            
+
             <div class="table-container">
                 <table id="plantingTable">
                     <thead>
@@ -476,7 +616,7 @@
                 <div class="info-card stagger-item" style="animation-delay: 0.1s">
                     <i class="fas fa-seedling"></i>
                     <h3>ملايين الأشجار</h3>
-                    <p>تهدف الحملة إلى زراعة 10 ملايين شجرة في جميع أنحاء الجزائر خلال السنوات الخمس القادمة</p>
+                    <p>تهدف الحملة إلى زراعة ملايين الأشجارفي جميع أنحاء الجزائر خلال السنوات القادمة</p>
                 </div>
                 <div class="info-card stagger-item" style="animation-delay: 0.3s">
                     <i class="fas fa-map-marked-alt"></i>
@@ -486,7 +626,7 @@
                 <div class="info-card stagger-item" style="animation-delay: 0.5s">
                     <i class="fas fa-users"></i>
                     <h3>مشاركة مجتمعية</h3>
-                    <p>تشجع الحملة على المشاركة المجتمعية من خلال برامج التطوع والمبادرات المحلية</p>
+                    <p>تشجع الحملة على المشاركة المجتمعية من خلال برامج التطوع التي بادرت بها وزارة الفلاحة والنتمية الريفية والمبادرات الجمعوية المحلية</p>
                 </div>
             </div>
         </div>
@@ -502,11 +642,11 @@
                 <div class="footer-column">
                     <h3>روابط سريعة</h3>
                     <ul>
-                        <li><a href="#home">الرئيسية</a></li>
-                        <li><a href="#map-section">خريطة التشجير</a></li>
-                        <li><a href="#data-section">قائمة المناطق</a></li>
-                        <li><a href="#about">عن الحملة</a></li>
-                        <li><a href="#">التطوع</a></li>
+                        <li><a href="#home"><i class="fas fa-home"></i> الرئيسية</a></li>
+                        <li><a href="#map-section"><i class="fas fa-map"></i> خريطة التشجير</a></li>
+                        <li><a href="#data-section"><i class="fas fa-list"></i> قائمة المناطق</a></li>
+                        <li><a href="#about"><i class="fas fa-info-circle"></i> عن الحملة</a></li>
+                        <li><a href="#"><i class="fas fa-hands-helping"></i> التطوع</a></li>
                     </ul>
                 </div>
                 <div class="footer-column">
@@ -514,12 +654,12 @@
                     <ul>
                         <li><i class="fas fa-phone"></i> 123 456 7890</li>
                         <li><i class="fas fa-envelope"></i> info@algeria-greening.dz</li>
-                        <li><i class="fas fa-map-marker-alt"></i> الجزائر العاصمة، الجزائر</li>
+                        <li><i class="fas fa-map-marker-alt"></i> الجزائر ، الجزائر الخضراء/li>
                     </ul>
                 </div>
             </div>
             <div class="copyright">
-                <p>© 2023 جميع الحقوق محفوظة - حملة التشجير الوطنية الجزائر</p>
+                <p>© 25 أكتوبر 2025 جميع الحقوق محفوظة - الجزائر الخضراء</p>
             </div>
         </div>
     </footer>
@@ -537,7 +677,10 @@
             { id: 7, state: "قسنطينة", municipality: "قسنطينة", area: "جسر القنطرة", lat: 36.3650, lng: 6.6147 },
             { id: 8, state: "عنابة", municipality: "عنابة", area: "منتزه النحال", lat: 36.9020, lng: 7.7550 },
             { id: 9, state: "تلمسان", municipality: "تلمسان", area: "غابة تلمسان", lat: 34.8828, lng: -1.3167 },
-            { id: 10, state: "باتنة", municipality: "باتنة", area: "غابة باتنة", lat: 35.5500, lng: 6.1667 }
+            { id: 10, state: "بومرداس", municipality: "بودواد", area: "غابة آلما (كرروش)", lat: 36.742284, lng: 3.384356 },
+            { id: 11, state: "بومرداس", municipality: "أعفير", area: "غابة ميزرانة", lat: 36.859991, lng: 4.028348 },
+            { id: 12, state: "بومرداس", municipality: "زموري", area: "غابة الساحل (واد المرجة)", lat: 36.742284, lng: 3.384356 },
+            { id: 13, state: "باتنة", municipality: "باتنة", area: "غابة باتنة", lat: 35.5500, lng: 6.1667 }
         ];
 
         // المتغيرات العامة
@@ -550,15 +693,15 @@
         function initMap() {
             // مركز الخريطة على الجزائر
             const algeriaCenter = [28.0339, 1.6596];
-            
+
             // إنشاء الخريطة
             map = L.map('map').setView(algeriaCenter, 6);
-            
+
             // إضافة طبقة الخريطة الأساسية
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             }).addTo(map);
-            
+
             // إضافة علامات مواقع التشجير
             plantingSites.forEach(site => {
                 const marker = L.marker([site.lat, site.lng])
@@ -571,31 +714,37 @@
                             <button class="action-btn" onclick="focusOnSite(${site.id})">التفاصيل</button>
                         </div>
                     `);
-                
+
                 markers.push({
                     id: site.id,
                     marker: marker,
                     site: site
                 });
             });
-            
+
             // ملء جدول البيانات
             populateTable(plantingSites);
+
+            // إضافة حدث القائمة المنسدلة للهواتف
+            document.getElementById('menuToggle').addEventListener('click', function () {
+                const nav = document.getElementById('mainNav');
+                nav.classList.toggle('active');
+            });
         }
 
         // ملء جدول البيانات
         function populateTable(data) {
             const tableBody = document.getElementById('tableBody');
             tableBody.innerHTML = '';
-            
+
             data.forEach(site => {
                 const row = document.createElement('tr');
                 row.classList.add('fade-in');
-                
+
                 // حساب المسافة ووقت السير إذا كان موقع المستخدم معروفًا
                 let distance = 'غير معروف';
                 let walkingTime = 'غير معروف';
-                
+
                 if (userLocation) {
                     const dist = calculateDistance(
                         userLocation.lat, userLocation.lng,
@@ -604,7 +753,7 @@
                     distance = `${dist.toFixed(2)} كم`;
                     walkingTime = calculateWalkingTime(dist);
                 }
-                
+
                 row.innerHTML = `
                     <td>${site.id}</td>
                     <td>${site.state}</td>
@@ -618,26 +767,26 @@
                         </button>
                     </td>
                 `;
-                
+
                 tableBody.appendChild(row);
             });
         }
 
         // البحث في الجدول
-        document.getElementById('searchInput').addEventListener('input', function(e) {
+        document.getElementById('searchInput').addEventListener('input', function (e) {
             const searchTerm = e.target.value.toLowerCase();
-            const filteredSites = plantingSites.filter(site => 
-                site.state.toLowerCase().includes(searchTerm) || 
+            const filteredSites = plantingSites.filter(site =>
+                site.state.toLowerCase().includes(searchTerm) ||
                 site.municipality.toLowerCase().includes(searchTerm)
             );
             populateTable(filteredSites);
-            
+
             // تحديث العلامات على الخريطة
             updateMapMarkers(filteredSites);
         });
 
         // إعادة تعيين البحث
-        document.getElementById('resetSearch').addEventListener('click', function() {
+        document.getElementById('resetSearch').addEventListener('click', function () {
             document.getElementById('searchInput').value = '';
             populateTable(plantingSites);
             updateMapMarkers(plantingSites);
@@ -649,7 +798,7 @@
             markers.forEach(markerObj => {
                 map.removeLayer(markerObj.marker);
             });
-            
+
             // إضافة العلامات المرئية فقط
             markers.forEach(markerObj => {
                 if (sites.some(site => site.id === markerObj.id)) {
@@ -669,45 +818,45 @@
                             lat: position.coords.latitude,
                             lng: position.coords.longitude
                         };
-                        
+
                         // تحديث مركز الخريطة لموقع المستخدم
                         map.setView([userLocation.lat, userLocation.lng], 10);
-                        
+
                         // إضافة علامة لموقع المستخدم
                         if (userMarker) {
                             map.removeLayer(userMarker);
                         }
-                        
+
                         userMarker = L.marker([userLocation.lat, userLocation.lng])
                             .addTo(map)
                             .bindPopup('موقعك الحالي')
                             .openPopup();
-                        
+
                         // حساب المسافات وإيجاد أقرب موقع
                         let nearestSite = null;
                         let minDistance = Infinity;
-                        
+
                         markers.forEach(markerObj => {
                             const distance = calculateDistance(
                                 userLocation.lat, userLocation.lng,
                                 markerObj.site.lat, markerObj.site.lng
                             );
-                            
+
                             if (distance < minDistance) {
                                 minDistance = distance;
                                 nearestSite = markerObj;
                             }
                         });
-                        
+
                         // إظهار أقرب موقع
                         if (nearestSite) {
                             nearestSite.marker.openPopup();
-                            
+
                             // رسم خط بين موقع المستخدم وأقرب موقع
                             if (window.distanceLine) {
                                 map.removeLayer(window.distanceLine);
                             }
-                            
+
                             window.distanceLine = L.polyline([
                                 [userLocation.lat, userLocation.lng],
                                 [nearestSite.site.lat, nearestSite.site.lng]
@@ -717,10 +866,10 @@
                                 opacity: 0.7,
                                 dashArray: '10, 10'
                             }).addTo(map);
-                            
+
                             // تحديث الجدول بالمسافات الجديدة
                             populateTable(plantingSites);
-                            
+
                             // إبراز الصف الأقرب في الجدول
                             highlightNearestRow(nearestSite.site.id);
                         }
@@ -755,16 +904,16 @@
                 map.removeLayer(userMarker);
                 userMarker = null;
             }
-            
+
             // إزالة خط المسافة إذا كان موجودًا
             if (window.distanceLine) {
                 map.removeLayer(window.distanceLine);
             }
-            
+
             // إعادة ضبط الخريطة لتعرض جميع المواقع
             const group = new L.featureGroup(markers.map(m => m.marker));
             map.fitBounds(group.getBounds().pad(0.1));
-            
+
             // إزالة التمييز من الجدول
             const rows = document.querySelectorAll('#tableBody tr');
             rows.forEach(row => row.classList.remove('highlight'));
@@ -775,7 +924,7 @@
             const site = plantingSites.find(s => s.id === siteId);
             if (site) {
                 map.setView([site.lat, site.lng], 13);
-                
+
                 // إبراز الصف في الجدول
                 highlightNearestRow(siteId);
             }
@@ -785,7 +934,7 @@
         function navigateToSite(lat, lng) {
             // فتح تطبيق خرائط جوجل أو أي تطبيق خرائط آخر
             const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-            
+
             if (isMobile) {
                 // للجوال - فتح تطبيق خرائط جوجل
                 window.open(`https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`, '_blank');
@@ -800,11 +949,11 @@
             const R = 6371; // نصف قطر الأرض بالكيلومترات
             const dLat = (lat2 - lat1) * Math.PI / 180;
             const dLon = (lon2 - lon1) * Math.PI / 180;
-            const a = 
-                Math.sin(dLat/2) * Math.sin(dLat/2) +
-                Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * 
-                Math.sin(dLon/2) * Math.sin(dLon/2);
-            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+            const a =
+                Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                Math.sin(dLon / 2) * Math.sin(dLon / 2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
             const distance = R * c;
             return distance;
         }
@@ -813,7 +962,7 @@
         function calculateWalkingTime(distance) {
             const walkingSpeed = 5; // كم/ساعة
             const timeInHours = distance / walkingSpeed;
-            
+
             if (timeInHours < 1) {
                 const minutes = Math.round(timeInHours * 60);
                 return `${minutes} دقيقة`;
@@ -828,4 +977,5 @@
         window.onload = initMap;
     </script>
 </body>
+
 </html>
