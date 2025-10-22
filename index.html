@@ -1,249 +1,540 @@
-<!doctype html>
-
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>مشروع الجزائر الخضراء — خريطة غرس الأشجار</title>
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-  <!-- Leaflet CSS -->
-  <link id="leafletCSS" rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-sA+e2gk0n1k6wQp0qv1X0rC3KkR0r5gqvFv9g/9m0+M=" crossorigin=""/>
-  <style>
-    :root{--bg:#f6f7fb;--card:#ffffff;--muted:#6b7280;--accent:#1f8ef1}
-    html,body{height:100%;margin:0;font-family:Inter, system-ui, sans-serif;background:var(--bg);color:#0f172a}
-    .app{display:grid;grid-template-columns:420px 1fr;gap:18px;height:100vh;padding:18px}
-    .panel{background:var(--card);border-radius:12px;box-shadow:0 6px 20px rgba(12,18,36,0.06);padding:16px;overflow:auto}
-    header{display:flex;align-items:center;gap:12px;margin-bottom:12px}
-    header h1{font-size:18px;margin:0}
-    .controls{display:flex;gap:8px;flex-wrap:wrap}
-    input.search{flex:1;padding:10px;border-radius:10px;border:1px solid #e6e9ef}
-    button{background:var(--accent);color:#fff;border:none;padding:9px 12px;border-radius:10px;cursor:pointer}
-    #map{height:100%;border-radius:12px}
-    table{width:100%;border-collapse:collapse;margin-top:12px}
-    th,td{padding:8px;text-align:right;border-bottom:1px solid #f1f3f6;font-size:13px}
-    th{color:var(--muted);font-weight:600}
-    .row-action{display:flex;gap:8px;justify-content:flex-end}
-    .badge{background:#eef6ff;color:#0b5ed7;padding:6px 8px;border-radius:999px;font-size:12px}
-    .top-actions{display:flex;gap:8px;margin-top:8px}
-    .file{border:1px dashed #e6e9ef;padding:10px;border-radius:10px;text-align:center;color:var(--muted)}
-    @media (max-width:900px){.app{grid-template-columns:1fr;grid-template-rows:360px 1fr}} 
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حملة التشجير الوطنية - الجزائر</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background: linear-gradient(to right, #2e7d32, #4caf50);
+            color: white;
+            padding: 1.5rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo-icon {
+            font-size: 2.5rem;
+        }
+        
+        .logo-text h1 {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+        
+        .logo-text p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+        
+        nav a:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        
+        .hero {
+            background: url('https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            padding: 0 20px;
+        }
+        
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: #4caf50;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+            text-decoration: none;
+        }
+        
+        .btn:hover {
+            background: #2e7d32;
+        }
+        
+        .map-section {
+            padding: 50px 0;
+            background: white;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            color: #2e7d32;
+            font-size: 2rem;
+        }
+        
+        .map-container {
+            height: 500px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        #map {
+            height: 100%;
+            width: 100%;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        
+        .info-section {
+            padding: 50px 0;
+            background: #f9f9f9;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .info-card {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        
+        .info-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .info-card i {
+            font-size: 3rem;
+            color: #4caf50;
+            margin-bottom: 15px;
+        }
+        
+        .info-card h3 {
+            margin-bottom: 15px;
+            color: #2e7d32;
+        }
+        
+        footer {
+            background: #333;
+            color: white;
+            padding: 40px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-column h3 {
+            margin-bottom: 20px;
+            color: #4caf50;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column a:hover {
+            color: #4caf50;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .hero h2 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Maps API -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap&libraries=geometry" async defer></script>
 </head>
 <body>
-  <div class="app">
-    <aside class="panel">
-      <header>
-        <div style="flex:1">
-          <h1>مشروع الجزائر الخضراء</h1>
-          <div style="font-size:13px;color:var(--muted)">صفحة خرائط لتحديد نقاط الغرس عبر 58 ولاية</div>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-tree"></i>
+                    </div>
+                    <div class="logo-text">
+                        <h1>حملة التشجير الوطنية</h1>
+                        <p>الجزائر أكثر خضرة واخضرارًا</p>
+                    </div>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#home">الرئيسية</a></li>
+                        <li><a href="#map-section">الخريطة</a></li>
+                        <li><a href="#about">عن الحملة</a></li>
+                        <li><a href="#contact">اتصل بنا</a></li>
+                    </ul>
+                </nav>
+            </div>
         </div>
-        <div class="badge">25 أكتوبر 2025</div>
-      </header><div class="controls">
-    <input id="searchBox" class="search" placeholder="ابحث باسم الولاية أو اسم الموقع" />
-    <button id="btnFind">بحث</button>
-    <button id="btnLocate">أقرب موقع إلي</button>
-  </div>
+    </header>
 
-  <div class="top-actions">
-    <label class="file">
-      رفع ملف CSV
-      <input id="fileInput" type="file" accept=".csv" style="display:none" />
-    </label>
-    <button id="btnReset">إعادة تعيين البيانات</button>
-    <button id="btnExport">تصدير GeoJSON</button>
-  </div>
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>معًا لبناء غطاء نباتي مستدام في الجزائر</h2>
+            <p>انضم إلى حملتنا الوطنية لزراعة الملايين من الأشجار في جميع أنحاء البلاد</p>
+            <a href="#map-section" class="btn">اكتشف مواقع التشجير</a>
+        </div>
+    </section>
 
-  <div style="margin-top:12px">
-    <strong>نقاط الغرس (عرض تجريبي)</strong>
-    <div style="font-size:12px;color:var(--muted);margin-top:6px">يمكنك رفع ملف CSV يتضمن: name, wilaya, lat, lng, phone, open, close, status</div>
-  </div>
+    <section class="map-section" id="map-section">
+        <div class="container">
+            <h2 class="section-title">خريطة مواقع التشجير في الجزائر</h2>
+            <div class="map-container">
+                <div id="map"></div>
+            </div>
+            <div class="controls">
+                <button id="findNearest" class="btn">
+                    <i class="fas fa-location-arrow"></i> ابحث عن أقرب موقع تشجير
+                </button>
+                <button id="showAll" class="btn">
+                    <i class="fas fa-map-marker-alt"></i> عرض جميع المواقع
+                </button>
+            </div>
+        </div>
+    </section>
 
-  <table id="sitesTable">
-    <thead>
-      <tr><th>الولاية / الموقع</th><th>هاتف</th><th>المسافة</th></tr>
-    </thead>
-    <tbody></tbody>
-  </table>
+    <section class="info-section" id="about">
+        <div class="container">
+            <h2 class="section-title">معلومات عن الحملة</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <i class="fas fa-seedling"></i>
+                    <h3>ملايين الأشجار</h3>
+                    <p>تهدف الحملة إلى زراعة 10 ملايين شجرة في جميع أنحاء الجزائر خلال السنوات الخمس القادمة</p>
+                </div>
+                <div class="info-card">
+                    <i class="fas fa-map-marked-alt"></i>
+                    <h3>مواقع متنوعة</h3>
+                    <p>تغطي الحملة جميع الولايات الجزائرية مع التركيز على المناطق الأكثر تأثرًا بالتغير المناخي</p>
+                </div>
+                <div class="info-card">
+                    <i class="fas fa-users"></i>
+                    <h3>مشاركة مجتمعية</h3>
+                    <p>تشجع الحملة على المشاركة المجتمعية من خلال برامج التطوع والمبادرات المحلية</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-</aside>
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>عن الحملة</h3>
+                    <p>حملة وطنية تهدف إلى زيادة الرقعة الخضراء في الجزائر ومكافحة التصحر من خلال زراعة الأشجار.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>روابط سريعة</h3>
+                    <ul>
+                        <li><a href="#home">الرئيسية</a></li>
+                        <li><a href="#map-section">خريطة التشجير</a></li>
+                        <li><a href="#about">عن الحملة</a></li>
+                        <li><a href="#">التطوع</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>اتصل بنا</h3>
+                    <ul>
+                        <li><i class="fas fa-phone"></i> 123 456 7890</li>
+                        <li><i class="fas fa-envelope"></i> info@algeria-greening.dz</li>
+                        <li><i class="fas fa-map-marker-alt"></i> الجزائر العاصمة، الجزائر</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>© 2023 جميع الحقوق محفوظة - حملة التشجير الوطنية الجزائر</p>
+            </div>
+        </div>
+    </footer>
 
-<main class="panel" style="padding:0;">
-  <div id="map"></div>
-</main>
-
-  </div>  <!-- Leaflet JS will be loaded dynamically if not present -->  <script>
-    // Utilities
-    function escapeHtml(text){ return (text||'').toString().replace(/[&<>\"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
-
-    // Sample data
-    const sampleSites = [
-      {id:1, name:'موقع غرس الجزائر المركز', wilaya:'الجزائر', lat:36.7538, lng:3.0588, phone:'+213 21 00 00 01', open:'08:00', close:'17:00', status:'مؤكد'},
-      {id:2, name:'موقع غرس وهران', wilaya:'وهران', lat:35.6971, lng:-0.6308, phone:'+213 41 00 00 02', open:'08:00', close:'17:00', status:'مؤكد'},
-      {id:3, name:'موقع غرس قسنطينة', wilaya:'قسنطينة', lat:36.365, lng:6.6147, phone:'+213 31 00 00 03', open:'07:30', close:'16:30', status:'مؤكد'},
-    ];
-
-    // State
-    let sites = sampleSites.slice();
-    let markersLayer = null;
-    let map = null;
-
-    // Initialize Leaflet map when L is available
-    function initMap(){
-      if(typeof L === 'undefined'){
-        console.error('Leaflet غير متاح أثناء initMap.');
-        return;
-      }
-
-      // create map only once
-      if(map) return;
-
-      map = L.map('map', {zoomControl:true}).setView([28.0339, 1.6596], 6);
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; OpenStreetMap contributors'
-      }).addTo(map);
-
-      markersLayer = L.layerGroup().addTo(map);
-      renderMarkers();
-
-      attachUIEvents();
-    }
-
-    // If Leaflet isn't loaded, load it dynamically then init
-    function ensureLeafletAndInit(){
-      if(typeof L !== 'undefined') return initMap();
-
-      // load script dynamically
-      const s = document.createElement('script');
-      s.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
-      s.async = true;
-      s.onload = ()=>{ console.log('Leaflet loaded dynamically'); initMap(); };
-      s.onerror = ()=>{ alert('فشل تحميل مكتبة الخرائط (Leaflet). تأكد من اتصال الإنترنت أو أعد تحميل الصفحة.'); };
-      document.head.appendChild(s);
-
-      // as safety, try init after DOMContentLoaded in case script loaded earlier
-      document.addEventListener('DOMContentLoaded', ()=>{ if(typeof L !== 'undefined') initMap(); });
-
-      // timeout fallback
-      setTimeout(()=>{ if(typeof L !== 'undefined') return; console.warn('Leaflet لم يُحمّل بعد بعد 5 ثوان.'); }, 5000);
-    }
-
-    // Render markers and table
-    function renderMarkers(){
-      if(!markersLayer || !map) return;
-      markersLayer.clearLayers();
-      sites.forEach(s => {
-        const m = L.marker([s.lat,s.lng]).addTo(markersLayer);
-        m.bindPopup(`<b>${escapeHtml(s.name)}</b><br>${escapeHtml(s.wilaya)}<br>الهاتف: ${escapeHtml(s.phone)}<br>الحالة: ${escapeHtml(s.status)}`);
-        m.siteId = s.id;
-      });
-      renderTable();
-    }
-
-    function renderTable(userPos){
-      const tbody = document.querySelector('#sitesTable tbody');
-      if(!tbody) return;
-      tbody.innerHTML = '';
-      const computeDist = (lat1,lon1,lat2,lon2)=>{
-        const toRad = v=>v*Math.PI/180;
-        const R=6371;const dLat=toRad(lat2-lat1);const dLon=toRad(lon2-lon1);
-        const a=Math.sin(dLat/2)*Math.sin(dLat/2)+Math.cos(toRad(lat1))*Math.cos(toRad(lat2))*Math.sin(dLon/2)*Math.sin(dLon/2);
-        const c=2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
-        return R*c;
-      };
-
-      let rows = sites.map(s=>{
-        const dist = userPos? computeDist(userPos.lat,userPos.lng,s.lat,s.lng): null;
-        return Object.assign({}, s, {distance: dist});
-      });
-
-      if(userPos) rows.sort((a,b)=> (a.distance||1e9)-(b.distance||1e9));
-
-      rows.forEach(r=>{
-        const tr = document.createElement('tr');
-        const tdName = document.createElement('td');
-        tdName.innerHTML = `<strong>${escapeHtml(r.wilaya)}</strong><br><small>${escapeHtml(r.name)}</small>`;
-        const tdPhone = document.createElement('td');
-        tdPhone.textContent = r.phone||'-';
-        const tdDist = document.createElement('td');
-        tdDist.textContent = r.distance? (r.distance.toFixed(2)+' km') : '-';
-        tr.appendChild(tdName);tr.appendChild(tdPhone);tr.appendChild(tdDist);
-        tr.style.cursor='pointer';
-        tr.addEventListener('click', ()=>{
-          if(map) map.setView([r.lat,r.lng],12);
-          if(markersLayer) markersLayer.eachLayer(m=>{ if(m.siteId===r.id) m.openPopup(); });
-        });
-        tbody.appendChild(tr);
-      });
-    }
-
-    // Nearest functions
-    function haversine(lat1,lon1,lat2,lon2){ const toRad=v=>v*Math.PI/180; const R=6371; const dLat=toRad(lat2-lat1); const dLon=toRad(lon2-lon1); const a=Math.sin(dLat/2)**2+Math.cos(toRad(lat1))*Math.cos(toRad(lat2))*Math.sin(dLon/2)**2; return 2*R*Math.atan2(Math.sqrt(a),Math.sqrt(1-a)); }
-    function findNearest(lat,lng){ let min=null; let minD=1e9; sites.forEach(s=>{ const d = haversine(lat,lng,s.lat,s.lng); if(d<minD){minD=d;min=s;} }); return min; }
-
-    // UI wiring (called once after map init)
-    function attachUIEvents(){
-      document.getElementById('btnFind').addEventListener('click', ()=>{
-        const q = document.getElementById('searchBox').value.trim().toLowerCase();
-        if(!q){ sites = sampleSites.slice(); renderMarkers(); return; }
-        const filtered = sampleSites.filter(s => (s.name+ ' ' + s.wilaya).toLowerCase().includes(q));
-        sites = filtered;
-        renderMarkers();
-      });
-
-      document.getElementById('btnReset').addEventListener('click', ()=>{ sites = sampleSites.slice(); renderMarkers(); document.getElementById('searchBox').value=''; });
-
-      document.getElementById('btnLocate').addEventListener('click', ()=>{
-        if(!navigator.geolocation){ alert('المتصفح لا يدعم تحديد الموقع'); return; }
-        navigator.geolocation.getCurrentPosition(pos=>{
-          const userPos = {lat: pos.coords.latitude, lng: pos.coords.longitude};
-          if(window.userMarker && map) map.removeLayer(window.userMarker);
-          if(map){ window.userMarker = L.circleMarker([userPos.lat,userPos.lng],{radius:8,fill:true}).addTo(map).bindPopup('أنت هنا').openPopup(); }
-          const nearest = findNearest(userPos.lat,userPos.lng);
-          if(nearest && map){ map.setView([nearest.lat,nearest.lng],12); markersLayer.eachLayer(m=>{ if(m.siteId===nearest.id) m.openPopup(); }); }
-          renderTable(userPos);
-        }, err=>{ alert('خطأ في الحصول على الموقع: '+err.message); });
-      });
-
-      // file import
-      document.getElementById('fileInput').addEventListener('change', (e)=>{
-        const f = e.target.files[0]; if(!f) return;
-        const reader = new FileReader();
-        reader.onload = ()=>{
-          const text = reader.result;
-          const parsed = parseCSV(text);
-          const imported = parsed.map((row,i)=>({id:1000+i,name:row.name||row.Name||row.NAME, wilaya:row.wilaya||row.Wilaya||row.wilayah||'', lat: parseFloat(row.lat||row.lat_deg||row.Lat) || 0, lng: parseFloat(row.lng||row.lon||row.Lng) || 0, phone: row.phone||'', open: row.open||'', close: row.close||'', status: row.status||''})).filter(r=>r.lat && r.lng);
-          if(imported.length===0){ alert('لم يتم العثور على بيانات نقاط صالحة في الملف'); return; }
-          sites = imported; renderMarkers(); if(map && markersLayer && markersLayer.getBounds && !markersLayer.getBounds().isValid()){} else if(map) map.fitBounds(markersLayer.getBounds(),{padding:[40,40]});
-        };
-        reader.readAsText(f, 'utf-8');
-      });
-
-      // export
-      document.getElementById('btnExport').addEventListener('click', ()=>{
-        const geo = {type:'FeatureCollection', features: sites.map(s=>({type:'Feature', properties:{id:s.id,name:s.name,wilaya:s.wilaya,phone:s.phone,open:s.open,close:s.close,status:s.status}, geometry:{type:'Point', coordinates:[s.lng,s.lat]}}))};
-        const blob = new Blob([JSON.stringify(geo, null, 2)], {type:'application/json'});
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a'); a.href=url; a.download='algeria_greening_sites.geojson'; a.click(); URL.revokeObjectURL(url);
-      });
-
-      document.getElementById('searchBox').addEventListener('keydown', (e)=>{ if(e.key==='Enter') document.getElementById('btnFind').click(); });
-    }
-
-    // CSV parser
-    function parseCSV(text){
-      const lines = text.trim().split(/\r?\n/).filter(Boolean);
-      if(lines.length===0) return [];
-      const header = lines.shift().split(/,|;|\t/).map(h=>h.trim());
-      return lines.map(line=>{ const cols = line.split(/,|;|\t/).map(c=>c.trim()); const obj = {}; header.forEach((h,i)=>obj[h]=cols[i]||''); return obj; });
-    }
-
-    // Start: ensure DOM loaded and Leaflet ready
-    if(document.readyState === 'loading'){
-      document.addEventListener('DOMContentLoaded', ensureLeafletAndInit);
-    } else {
-      ensureLeafletAndInit();
-    }
-
-  </script></body>
+    <script>
+        // خريطة جوجل
+        let map;
+        let markers = [];
+        let userMarker = null;
+        
+        // مواقع افتراضية لحملات التشجير في الجزائر
+        const plantingSites = [
+            { name: "حديقة التجارب بالحامة", lat: 36.7372, lng: 3.0875 },
+            { name: "غابة بوعلام بسيدي بلعباس", lat: 35.2089, lng: -0.6306 },
+            { name: "منتزه القالة الوطني", lat: 36.8969, lng: 8.4431 },
+            { name: "غابة بابور", lat: 36.4667, lng: 4.5333 },
+            { name: "غابة جرجرة", lat: 36.4667, lng: 4.5333 },
+            { name: "وادي سوف", lat: 33.3667, lng: 6.8667 },
+            { name: "غابة تلمسان", lat: 34.8828, lng: -1.3167 },
+            { name: "منطقة القبائل", lat: 36.7500, lng: 5.0500 },
+            { name: "غابة الشلف", lat: 36.1667, lng: 1.3333 },
+            { name: "غابة باتنة", lat: 35.5500, lng: 6.1667 }
+        ];
+        
+        function initMap() {
+            // مركز الخريطة على الجزائر
+            const algeriaCenter = { lat: 28.0339, lng: 1.6596 };
+            
+            // إنشاء الخريطة
+            map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 6,
+                center: algeriaCenter,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            });
+            
+            // إضافة علامات لمواقع التشجير
+            plantingSites.forEach(site => {
+                const marker = new google.maps.Marker({
+                    position: { lat: site.lat, lng: site.lng },
+                    map: map,
+                    title: site.name,
+                    icon: {
+                        url: "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(`
+                            <svg width="30" height="40" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M15 0C6.716 0 0 6.716 0 15c0 10 15 25 15 25s15-15 15-25C30 6.716 23.284 0 15 0z" fill="#4CAF50"/>
+                                <path d="M15 8a7 7 0 1 0 0 14 7 7 0 0 0 0-14z" fill="#2E7D32"/>
+                            </svg>
+                        `),
+                        scaledSize: new google.maps.Size(30, 40),
+                        anchor: new google.maps.Point(15, 40)
+                    }
+                });
+                
+                const infoWindow = new google.maps.InfoWindow({
+                    content: `<div style="padding: 10px;"><h3 style="margin: 0 0 5px;">${site.name}</h3><p>موقع لحملة التشجير</p></div>`
+                });
+                
+                marker.addListener("click", () => {
+                    infoWindow.open(map, marker);
+                });
+                
+                markers.push(marker);
+            });
+        }
+        
+        // البحث عن أقرب موقع تشجير
+        document.getElementById("findNearest").addEventListener("click", findNearestSite);
+        document.getElementById("showAll").addEventListener("click", showAllSites);
+        
+        function findNearestSite() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    position => {
+                        const userLocation = {
+                            lat: position.coords.latitude,
+                            lng: position.coords.longitude
+                        };
+                        
+                        // تحديث مركز الخريطة لموقع المستخدم
+                        map.setCenter(userLocation);
+                        map.setZoom(10);
+                        
+                        // إضافة علامة لموقع المستخدم
+                        if (userMarker) {
+                            userMarker.setMap(null);
+                        }
+                        
+                        userMarker = new google.maps.Marker({
+                            position: userLocation,
+                            map: map,
+                            title: "موقعك الحالي",
+                            icon: {
+                                url: "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(`
+                                    <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="10" cy="10" r="8" fill="#FF5722" stroke="#fff" stroke-width="2"/>
+                                    </svg>
+                                `),
+                                scaledSize: new google.maps.Size(20, 20),
+                                anchor: new google.maps.Point(10, 10)
+                            }
+                        });
+                        
+                        // حساب المسافات وإيجاد أقرب موقع
+                        let nearestSite = null;
+                        let minDistance = Infinity;
+                        
+                        markers.forEach(marker => {
+                            const distance = google.maps.geometry.spherical.computeDistanceBetween(
+                                new google.maps.LatLng(userLocation),
+                                marker.getPosition()
+                            );
+                            
+                            if (distance < minDistance) {
+                                minDistance = distance;
+                                nearestSite = marker;
+                            }
+                        });
+                        
+                        // إظهار أقرب موقع
+                        if (nearestSite) {
+                            const infoWindow = new google.maps.InfoWindow({
+                                content: `<div style="padding: 10px;">
+                                    <h3 style="margin: 0 0 5px;">${nearestSite.getTitle()}</h3>
+                                    <p>أقرب موقع تشجير إليك</p>
+                                    <p>المسافة: ${(minDistance / 1000).toFixed(2)} كم</p>
+                                </div>`
+                            });
+                            
+                            infoWindow.open(map, nearestSite);
+                            
+                            // رسم خط بين موقع المستخدم وأقرب موقع
+                            const line = new google.maps.Polyline({
+                                path: [userLocation, nearestSite.getPosition()],
+                                geodesic: true,
+                                strokeColor: "#FF5722",
+                                strokeOpacity: 1.0,
+                                strokeWeight: 2,
+                                map: map
+                            });
+                        }
+                    },
+                    error => {
+                        alert("تعذر الحصول على موقعك. يرجى التأكد من تفعيل خدمة تحديد الموقع.");
+                    }
+                );
+            } else {
+                alert("متصفحك لا يدعم خدمة تحديد الموقع.");
+            }
+        }
+        
+        function showAllSites() {
+            // إزالة علامة المستخدم إذا كانت موجودة
+            if (userMarker) {
+                userMarker.setMap(null);
+                userMarker = null;
+            }
+            
+            // إعادة ضبط الخريطة لتعرض جميع المواقع
+            const bounds = new google.maps.LatLngBounds();
+            markers.forEach(marker => {
+                bounds.extend(marker.getPosition());
+            });
+            
+            map.fitBounds(bounds);
+        }
+    </script>
+</body>
 </html>
