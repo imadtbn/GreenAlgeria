@@ -525,6 +525,22 @@
                 grid-template-columns: repeat(3, 1fr);
             }
         }
+
+        .loading-spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #3498db;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
     </style>
 </head>
 
@@ -758,7 +774,6 @@
         // بيانات مناطق التشجير
         const plantingSites = [
             { id: 1, state: "أدرار", municipality: "أدرار", area: "ادرة السجون", lat: 27.8744, lng: -0.2934 },
-            { id: 1, state: "أدرار", municipality: "أدرار", area: "الأحياء", lat: 27.8744, lng: -0.2934 },
             { id: 1, state: "أدرار", municipality: "أدرار", area: "البلدية", lat: 27.8744, lng: -0.2934 },
             { id: 1, state: "أدرار", municipality: "تسبيت", area: "الثانوية", lat: 27.7667, lng: -0.2833 },
             { id: 1, state: "أدرار", municipality: "أدرار", area: "المدرسة القرآنية", lat: 27.8744, lng: -0.2934 },
@@ -1277,7 +1292,7 @@
             { id: 34, state: "برج بوعريريج", municipality: "الجيافرة", area: "الجيافرة", lat: 36.183, lng: 4.750 },
 
             { id: 35, state: "بومرداس", municipality: "زموري", area: "غابة الساحل (واد المرجة)", lat: 36.742284, lng: 3.384356 },
-            { id: 35, state: "بومرداس", municipality: "بودواد", area: "غابة آلما (كرروش)", lat: 36.742284, lng: 3.384356 },
+            { id: 35, state: "بومرداس", municipality: "بودواد", area: "غابة آلما (كرروش)", lat: 36.765432, lng: 3.421568 },
             { id: 35, state: "بومرداس", municipality: "أعفير", area: "غابة ميزرانة", lat: 36.859991, lng: 4.028348 },
 
             { id: 36, state: "الطارف", municipality: "الطارف", area: "الطارف", lat: 36.767, lng: 8.313 },
@@ -1417,35 +1432,6 @@
             { id: 43, state: "ميلة", municipality: "الشيقارة", area: "الشيقارة", lat: 36.500, lng: 6.417 },
             { id: 43, state: "ميلة", municipality: "قرام قوقة", area: "قرام قوقة", lat: 36.400, lng: 6.467 },
 
-            { id: 44, state: "عين الدفلى", municipality: "عين الدفلى", area: "عين الدفلى", lat: 36.2644, lng: 1.9679 },
-            { id: 44, state: "عين الدفلى", municipality: "العطاف", area: "العطاف", lat: 36.2293, lng: 2.2276 },
-            { id: 44, state: "عين الدفلى", municipality: "العامرة", area: "العامرة", lat: 36.2596, lng: 2.7215 },
-            { id: 44, state: "عين الدفلى", municipality: "عين الاشياخ", area: "عين الاشياخ", lat: 36.3372, lng: 1.8643 },
-            { id: 44, state: "عين الدفلى", municipality: "الحسينية", area: "الحسينية", lat: 36.3345, lng: 2.0959 },
-            { id: 44, state: "عين الدفلى", municipality: "الروينة", area: "الروينة", lat: 36.3584, lng: 2.1538 },
-            { id: 44, state: "عين الدفلى", municipality: "الماين", area: "الماين", lat: 36.3765, lng: 2.2574 },
-            { id: 44, state: "عين الدفلى", municipality: "بطحية", area: "بطحية", lat: 36.4103, lng: 2.3381 },
-            { id: 44, state: "عين الدفلى", municipality: "بلعاس", area: "بلعاس", lat: 36.4648, lng: 2.4397 },
-            { id: 44, state: "عين الدفلى", municipality: "زدين", area: "زدين", lat: 36.4869, lng: 2.5608 },
-            { id: 44, state: "عين الدفلى", municipality: "عريب", area: "عريب", lat: 36.5253, lng: 2.6535 },
-            { id: 44, state: "عين الدفلى", municipality: "جليدة", area: "جليدة", lat: 36.5618, lng: 2.7412 },
-            { id: 44, state: "عين الدفلى", municipality: "بومدفع", area: "بومدفع", lat: 36.5968, lng: 2.8279 },
-            { id: 44, state: "عين الدفلى", municipality: "تاشتة زقاعة", area: "تاشتة زقاعة", lat: 36.6153, lng: 2.9394 },
-            { id: 44, state: "عين الدفلى", municipality: "عين بويحي", area: "عين بويحي", lat: 36.6565, lng: 3.0482 },
-            { id: 44, state: "عين الدفلى", municipality: "المخاطرية", area: "المخاطرية", lat: 36.6943, lng: 3.1321 },
-            { id: 44, state: "عين الدفلى", municipality: "برج الأمير خالد", area: "برج الأمير خالد", lat: 36.7285, lng: 3.2418 },
-            { id: 44, state: "عين الدفلى", municipality: "طارق ابن زياد", area: "طارق ابن زياد", lat: 36.7591, lng: 3.3264 },
-            { id: 44, state: "عين الدفلى", municipality: "جندل", area: "جندل", lat: 36.7962, lng: 3.4239 },
-            { id: 44, state: "عين الدفلى", municipality: "عين السلطان", area: "عين السلطان", lat: 36.8339, lng: 3.5112 },
-            { id: 44, state: "عين الدفلى", municipality: "واد الجمعة", area: "واد الجمعة", lat: 36.8594, lng: 3.6247 },
-            { id: 44, state: "عين الدفلى", municipality: "واد الشرفة", area: "واد الشرفة", lat: 36.8925, lng: 3.7251 },
-            { id: 44, state: "عين الدفلى", municipality: "بن علال", area: "بن علال", lat: 36.9247, lng: 3.8279 },
-            { id: 44, state: "عين الدفلى", municipality: "حمام ريغة", area: "حمام ريغة", lat: 36.3819, lng: 2.3986 },
-            { id: 44, state: "عين الدفلى", municipality: "خميس مليانة", area: "خميس مليانة", lat: 36.2125, lng: 2.2187 },
-            { id: 44, state: "عين الدفلى", municipality: "سيدي لخضر", area: "سيدي لخضر", lat: 36.0918, lng: 2.1182 },
-            { id: 44, state: "عين الدفلى", municipality: "عين التركي", area: "عين التركي", lat: 36.1206, lng: 2.2424 },
-            { id: 44, state: "عين الدفلى", municipality: "مليانة", area: "مليانة", lat: 36.3069, lng: 2.2217 },
-            { id: 44, state: "عين الدفلى", municipality: "بربوش", area: "بربوش", lat: 36.1769, lng: 2.3542 },
 
             { id: 45, state: "النعامة", municipality: "النعامة", area: "النعامة", lat: 33.267, lng: -0.317 },
             { id: 45, state: "النعامة", municipality: "عين الصفراء", area: "عين الصفراء", lat: 32.750, lng: -0.583 },
@@ -1742,17 +1728,61 @@
             }
         }
 
-        // إبراز الصف الأقرب في الجدول
-        function highlightNearestRow(siteId) {
-            const rows = document.querySelectorAll('#tableBody tr');
-            rows.forEach(row => {
-                row.classList.remove('highlight');
-                if (parseInt(row.cells[0].textContent) === siteId) {
-                    row.classList.add('highlight');
-                    row.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }
-            });
+// نسخة بديلة أكثر دقة - تمرير كائن الموقع كاملاً
+function highlightNearestRowAdvanced(site) {
+    const rows = document.querySelectorAll('#tableBody tr');
+    let found = false;
+    
+    console.log(`🔍 البحث عن الموقع:`, site);
+    
+    rows.forEach((row, index) => {
+        row.classList.remove('highlight');
+        
+        // مقارنة كافة البيانات للتأكد من المطابقة
+        const rowId = parseInt(row.cells[0].textContent);
+        const rowState = row.cells[1].textContent;
+        const rowMunicipality = row.cells[2].textContent;
+        const rowArea = row.cells[3].textContent;
+        
+        if (rowId === site.id && 
+            rowState === site.state && 
+            rowMunicipality === site.municipality && 
+            rowArea === site.area) {
+            
+            row.classList.add('highlight');
+            row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            found = true;
+            console.log(`✅ تم إبراز الصف ${index + 1} بدقة`);
         }
+    });
+    
+    if (!found) {
+        console.warn(`⚠️ لم يتم العثور على الصف الدقيق للموقع`);
+        
+        // البحث التقريبي كحل بديل
+        highlightApproximateRow(site.id, site.state);
+    }
+}
+
+// البحث التقريبي كحل بديل
+function highlightApproximateRow(siteId, state) {
+    const rows = document.querySelectorAll('#tableBody tr');
+    let found = false;
+    
+    rows.forEach((row, index) => {
+        const rowId = parseInt(row.cells[0].textContent);
+        const rowState = row.cells[1].textContent;
+        
+        if (rowId === siteId && rowState === state) {
+            row.classList.add('highlight');
+            row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            found = true;
+            console.log(`🔵 تم إبراز الصف ${index + 1} تقريبياً`);
+        }
+    });
+    
+    return found;
+}
 
         // عرض جميع المواقع
         document.getElementById('showAll').addEventListener('click', showAllSites);
@@ -1819,7 +1849,7 @@
 
         // حساب وقت السير (بافتراض سرعة 77 كم/ساعة)
         function calculateWalkingTime(distance) {
-            const walkingSpeed = 77; // كم/ساعة
+            const walkingSpeed = 70; // كم/ساعة
             const timeInHours = distance / walkingSpeed;
 
             if (timeInHours < 1) {
@@ -1832,9 +1862,72 @@
             }
         }
 
+        // بدلاً من إزالة وإعادة إضافة العلامات
+        function updateMapMarkers(sites) {
+            markers.forEach(markerObj => {
+                const shouldShow = sites.some(site => site.id === markerObj.id);
+                if (shouldShow) {
+                    map.addLayer(markerObj.marker);
+                } else {
+                    map.removeLayer(markerObj.marker);
+                }
+            });
+        }
+
+        // لفترة التحميل
+        function showLoading() {
+            document.getElementById('loading').style.display = 'block';
+        }
+
+        function hideLoading() {
+            document.getElementById('loading').style.display = 'none';
+        }
+
+        // إضافة رسائل تأكيد
+        function navigateToSite(lat, lng, siteName) {
+            if (confirm(`هل تريد فتح خرائط جوجل للتوجه إلى ${siteName}؟`)) {
+                // كود التنقل الحالي
+            }
+        }
+
+        // تحسين أداء تحديث العلامات
+        function updateMapMarkers(sites) {
+            markers.forEach(markerObj => {
+                const isVisible = sites.some(site =>
+                    site.state === markerObj.site.state &&
+                    site.municipality === markerObj.site.municipality &&
+                    site.area === markerObj.site.area
+                );
+
+                if (isVisible && !map.hasLayer(markerObj.marker)) {
+                    map.addLayer(markerObj.marker);
+                } else if (!isVisible && map.hasLayer(markerObj.marker)) {
+                    map.removeLayer(markerObj.marker);
+                }
+            });
+        }
+
+        function validateCoordinates(lat, lng) {
+    // التحقق من أن الإحداثيات ضمن نطاق الجزائر
+    const algeriaBounds = {
+        north: 37.5,
+        south: 18.5,
+        west: -8.5,
+        east: 12.0
+    };
+    
+    return (
+        lat >= algeriaBounds.south &&
+        lat <= algeriaBounds.north &&
+        lng >= algeriaBounds.west &&
+        lng <= algeriaBounds.east
+    );
+}
+
         // تهيئة الخريطة عند تحميل الصفحة
         window.onload = initMap;
     </script>
+    
 </body>
 
 </html>
