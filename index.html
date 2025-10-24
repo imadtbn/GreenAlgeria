@@ -118,6 +118,7 @@
         }
 
         .hero {
+            position: relative;
             background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHP9V4M-yeYBKZdQapFR8yxTiCNBpm17c1hw&s') no-repeat center center/cover;
             height: 300px;
             display: flex;
@@ -125,18 +126,25 @@
             justify-content: center;
             text-align: center;
             color: white;
-            position: relative;
+            overflow: hidden;
         }
 
         .hero::before {
-            content: '';
+            content: "";
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
+            inset: 0;
+            background: rgba(0, 0, 0, 0.0);
+            /* تغميق الصورة */
+            backdrop-filter: brightness(1.1) contrast(1.1);
+            /* تحسين الإضاءة والتباين */
+            z-index: 0;
         }
+
+        .hero * {
+            position: relative;
+            z-index: 1;
+        }
+
 
         .hero-content {
             position: relative;
@@ -565,7 +573,7 @@
 
     <section class="map-section" id="map-section">
         <div class="container">
-            <h2 class="section-title">خريطة مواقع التشجير وتوزيع الأشجار  في الجزائر</h2>
+            <h2 class="section-title">خريطة مواقع التشجير وتوزيع الأشجار في الجزائر</h2>
             <div class="map-container">
                 <div id="map"></div>
             </div>
@@ -654,17 +662,18 @@
                 <div class="footer-column">
                     <h3>اتصل بنا</h3>
                     <ul>
-                      <li><i class="fas fa-phone"></i> 123 456 7890</li>
-                      <li><i class="fas fa-envelope"></i> info@algeria-greening.dz</li>
-                      <li><i class="fas fa-map-marker-alt"></i> الجزائر ، الجزائر الخضراء</li>
-                      <li>
-                        <a href="https://www.facebook.com/Greenest.Algeria/?locale=ar_AR" target="_blank" style="color: inherit; text-decoration: none;">
-                          <i class="fab fa-facebook"></i> صفحتنا على فيسبوك
-                        </a>
-                      </li>
+                        <li><i class="fas fa-phone"></i> 123 456 7890</li>
+                        <li><i class="fas fa-envelope"></i> info@algeria-greening.dz</li>
+                        <li><i class="fas fa-map-marker-alt"></i> الجزائر ، الجزائر الخضراء</li>
+                        <li>
+                            <a href="https://www.facebook.com/Greenest.Algeria/?locale=ar_AR" target="_blank"
+                                style="color: inherit; text-decoration: none;">
+                                <i class="fab fa-facebook"></i> صفحتنا على فيسبوك
+                            </a>
+                        </li>
                     </ul>
-                  </div>
-                  
+                </div>
+
             </div>
             <div class="copyright">
                 <p>© 25 أكتوبر 2025 جميع الحقوق محفوظة - الجزائر الخضراء</p>
@@ -1408,35 +1417,35 @@
             { id: 43, state: "ميلة", municipality: "الشيقارة", area: "الشيقارة", lat: 36.500, lng: 6.417 },
             { id: 43, state: "ميلة", municipality: "قرام قوقة", area: "قرام قوقة", lat: 36.400, lng: 6.467 },
 
-            { id: 44, state: "عين الدفلى", municipality: "عين الدفلى", area: "عين الدفلى", lat: 36.263, lng: 1.967 },
-            { id: 44, state: "عين الدفلى", municipality: "العطاف", area: "العطاف", lat: 36.217, lng: 2.233 },
-            { id: 44, state: "عين الدفلى", municipality: "العامرة", area: "العامرة", lat: 36.267, lng: 2.800 },
-            { id: 44, state: "عين الدفلى", municipality: "عين الاشياخ", area: "عين الاشياخ", lat: 36.300, lng: 1.900 },
-            { id: 44, state: "عين الدفلى", municipality: "الحسينية", area: "الحسينية", lat: 36.333, lng: 2.067 },
-            { id: 44, state: "عين الدفلى", municipality: "الروينة", area: "الروينة", lat: 36.367, lng: 2.167 },
-            { id: 44, state: "عين الدفلى", municipality: "الماين", area: "الماين", lat: 36.400, lng: 2.267 },
-            { id: 44, state: "عين الدفلى", municipality: "بطحية", area: "بطحية", lat: 36.433, lng: 2.367 },
-            { id: 44, state: "عين الدفلى", municipality: "بلعاس", area: "بلعاس", lat: 36.467, lng: 2.467 },
-            { id: 44, state: "عين الدفلى", municipality: "زدين", area: "زدين", lat: 36.500, lng: 2.567 },
-            { id: 44, state: "عين الدفلى", municipality: "عريب", area: "عريب", lat: 36.533, lng: 2.667 },
-            { id: 44, state: "عين الدفلى", municipality: "جليدة", area: "جليدة", lat: 36.567, lng: 2.767 },
-            { id: 44, state: "عين الدفلى", municipality: "بومدفع", area: "بومدفع", lat: 36.600, lng: 2.867 },
-            { id: 44, state: "عين الدفلى", municipality: "تاشتة زقاعة", area: "تاشتة زقاعة", lat: 36.633, lng: 2.967 },
-            { id: 44, state: "عين الدفلى", municipality: "عينبويحي", area: "عينبويحي", lat: 36.667, lng: 3.067 },
-            { id: 44, state: "عين الدفلى", municipality: "المخاطرية", area: "المخاطرية", lat: 36.700, lng: 3.167 },
-            { id: 44, state: "عين الدفلى", municipality: "برج الامير خالد", area: "برج الامير خالد", lat: 36.733, lng: 3.267 },
-            { id: 44, state: "عين الدفلى", municipality: "طارق ابن زياد", area: "طارق ابن زياد", lat: 36.767, lng: 3.367 },
-            { id: 44, state: "عين الدفلى", municipality: "جندل", area: "جندل", lat: 36.800, lng: 3.467 },
-            { id: 44, state: "عين الدفلى", municipality: "عين السلطان", area: "عين السلطان", lat: 36.833, lng: 3.567 },
-            { id: 44, state: "عين الدفلى", municipality: "واد الجمعة", area: "واد الجمعة", lat: 36.867, lng: 3.667 },
-            { id: 44, state: "عين الدفلى", municipality: "واد الشرفة", area: "واد الشرفة", lat: 36.900, lng: 3.767 },
-            { id: 44, state: "عين الدفلى", municipality: "بن علال", area: "بن علال", lat: 36.933, lng: 3.867 },
-            { id: 44, state: "عين الدفلى", municipality: "حمام ريغة", area: "حمام ريغة", lat: 36.967, lng: 3.967 },
-            { id: 44, state: "عين الدفلى", municipality: "خميس مليانة", area: "خميس مليانة", lat: 36.000, lng: 2.000 },
-            { id: 44, state: "عين الدفلى", municipality: "سيدي لخضر", area: "سيدي لخضر", lat: 36.033, lng: 2.100 },
-            { id: 44, state: "عين الدفلى", municipality: "عين التركي", area: "عين التركي", lat: 36.067, lng: 2.200 },
-            { id: 44, state: "عين الدفلى", municipality: "مليانة", area: "مليانة", lat: 36.100, lng: 2.300 },
-            { id: 44, state: "عين الدفلى", municipality: "بربوش", area: "بربوش", lat: 36.133, lng: 2.400 },
+            { id: 44, state: "عين الدفلى", municipality: "عين الدفلى", area: "عين الدفلى", lat: 36.2644, lng: 1.9679 },
+            { id: 44, state: "عين الدفلى", municipality: "العطاف", area: "العطاف", lat: 36.2293, lng: 2.2276 },
+            { id: 44, state: "عين الدفلى", municipality: "العامرة", area: "العامرة", lat: 36.2596, lng: 2.7215 },
+            { id: 44, state: "عين الدفلى", municipality: "عين الاشياخ", area: "عين الاشياخ", lat: 36.3372, lng: 1.8643 },
+            { id: 44, state: "عين الدفلى", municipality: "الحسينية", area: "الحسينية", lat: 36.3345, lng: 2.0959 },
+            { id: 44, state: "عين الدفلى", municipality: "الروينة", area: "الروينة", lat: 36.3584, lng: 2.1538 },
+            { id: 44, state: "عين الدفلى", municipality: "الماين", area: "الماين", lat: 36.3765, lng: 2.2574 },
+            { id: 44, state: "عين الدفلى", municipality: "بطحية", area: "بطحية", lat: 36.4103, lng: 2.3381 },
+            { id: 44, state: "عين الدفلى", municipality: "بلعاس", area: "بلعاس", lat: 36.4648, lng: 2.4397 },
+            { id: 44, state: "عين الدفلى", municipality: "زدين", area: "زدين", lat: 36.4869, lng: 2.5608 },
+            { id: 44, state: "عين الدفلى", municipality: "عريب", area: "عريب", lat: 36.5253, lng: 2.6535 },
+            { id: 44, state: "عين الدفلى", municipality: "جليدة", area: "جليدة", lat: 36.5618, lng: 2.7412 },
+            { id: 44, state: "عين الدفلى", municipality: "بومدفع", area: "بومدفع", lat: 36.5968, lng: 2.8279 },
+            { id: 44, state: "عين الدفلى", municipality: "تاشتة زقاعة", area: "تاشتة زقاعة", lat: 36.6153, lng: 2.9394 },
+            { id: 44, state: "عين الدفلى", municipality: "عين بويحي", area: "عين بويحي", lat: 36.6565, lng: 3.0482 },
+            { id: 44, state: "عين الدفلى", municipality: "المخاطرية", area: "المخاطرية", lat: 36.6943, lng: 3.1321 },
+            { id: 44, state: "عين الدفلى", municipality: "برج الأمير خالد", area: "برج الأمير خالد", lat: 36.7285, lng: 3.2418 },
+            { id: 44, state: "عين الدفلى", municipality: "طارق ابن زياد", area: "طارق ابن زياد", lat: 36.7591, lng: 3.3264 },
+            { id: 44, state: "عين الدفلى", municipality: "جندل", area: "جندل", lat: 36.7962, lng: 3.4239 },
+            { id: 44, state: "عين الدفلى", municipality: "عين السلطان", area: "عين السلطان", lat: 36.8339, lng: 3.5112 },
+            { id: 44, state: "عين الدفلى", municipality: "واد الجمعة", area: "واد الجمعة", lat: 36.8594, lng: 3.6247 },
+            { id: 44, state: "عين الدفلى", municipality: "واد الشرفة", area: "واد الشرفة", lat: 36.8925, lng: 3.7251 },
+            { id: 44, state: "عين الدفلى", municipality: "بن علال", area: "بن علال", lat: 36.9247, lng: 3.8279 },
+            { id: 44, state: "عين الدفلى", municipality: "حمام ريغة", area: "حمام ريغة", lat: 36.3819, lng: 2.3986 },
+            { id: 44, state: "عين الدفلى", municipality: "خميس مليانة", area: "خميس مليانة", lat: 36.2125, lng: 2.2187 },
+            { id: 44, state: "عين الدفلى", municipality: "سيدي لخضر", area: "سيدي لخضر", lat: 36.0918, lng: 2.1182 },
+            { id: 44, state: "عين الدفلى", municipality: "عين التركي", area: "عين التركي", lat: 36.1206, lng: 2.2424 },
+            { id: 44, state: "عين الدفلى", municipality: "مليانة", area: "مليانة", lat: 36.3069, lng: 2.2217 },
+            { id: 44, state: "عين الدفلى", municipality: "بربوش", area: "بربوش", lat: 36.1769, lng: 2.3542 },
 
             { id: 45, state: "النعامة", municipality: "النعامة", area: "النعامة", lat: 33.267, lng: -0.317 },
             { id: 45, state: "النعامة", municipality: "عين الصفراء", area: "عين الصفراء", lat: 32.750, lng: -0.583 },
